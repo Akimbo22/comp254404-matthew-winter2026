@@ -29,10 +29,7 @@ public static boolean unique2(int[] data) {
 
 public void main(String[] args){
     // I'm just a little worried about this, since my computer somehow runs
-    // these methods stupidly fast. Or... I guess smartly fast? I don't know.
-    // I'm more so worried about how many elements I'll have to add to even get
-    // the time close to a minute. I'll use the one I made for exercise 2 to start,
-    // then add more and more until the time grows
+    // these methods very fast, so I don't know if it'll reach even close to a second, let alone a minute
 
 //    int[] checkUnique = null;
 //    try{
@@ -43,20 +40,20 @@ public void main(String[] args){
     };
     // Initializing a hilariously large array
     // I'm currently trying to figure out how to read a JSON file of numbers instead
-    // of having this huge wall of numbers
+    // of having this huge wall of numbers, but I may remove this comment if I struggle to set that up
 
     // Okay, this is ridiculous. I am only getting a max of 7 milliseconds with 8000 elements in the array
     // I must be missing something in the question. I can't even add more without getting an error
-    // I can't even be upset or annoyed. It took 7 milliseconds for it to go through 8000 unique values.
-    // 8 milliseconds in total to do it twice
+    // I can't even be upset or annoyed. It took 7 milliseconds for it to go through 8000 unique values. It's very funny to me while testing
+    // 8 milliseconds combined.
     // It only gets faster the more I test it...
-    // Randomizing my list of obscene numbers worked a bit, but only 11 combined milliseconds
+    // Randomizing my array of obscene numbers worked a bit, but only 11 combined milliseconds
 
     // Testing unique1 first
     System.out.println("Checking for completely unique values with unique1: ");
-    long startTime1 = System.currentTimeMillis();
+    long startTime1 = System.currentTimeMillis(); // Same process as exercise 2. Getting the start time to test how long the algorithm takes
     long nanoStart1 = System.nanoTime();
-    boolean allUnique1 = unique1(checkUnique);
+    boolean allUnique1 = unique1(checkUnique); // Running unique1 with the checkUnique array
     long endTime1 = System.currentTimeMillis();
     long nanoEnd1 = System.nanoTime();
     long finalTime1 = endTime1 - startTime1; // Getting the milliseconds until I reach a point where the processing time (maybe) takes seconds to complete
@@ -77,5 +74,29 @@ public void main(String[] args){
     System.out.println(String.format("All Unique Values? - %b", allUnique2));
     System.out.println(String.format("Time taken to search: %d milliseconds", finalTime2));
     System.out.println(String.format("Nanoseconds (for testing): %d", nanoFinal2));
+
+    // Declaring the time it took to complete the longer processes
+    int arraySize = checkUnique.length; // Getting the length to include in the conclusion statement
+    if(finalTime1 > finalTime2) // Runs if unique1 took longer than unique2
+    {
+        System.out.println(String.format("Therefore, with %d elements in the array, it took unique1 longer to complete, at %d milliseconds!", arraySize, finalTime1));
+    }
+    else if(finalTime2 > finalTime1) // Runs if unique2 took longer than unique1
+    {
+        System.out.println(String.format("Therefore, with %d elements in the array, it took unique2 longer to complete, at %d milliseconds!", arraySize, finalTime2));
+    }
+    else if(finalTime1 == finalTime2) // Unlikely, but checks if both unique1 and unique2 took the same amount of time
+    {
+        System.out.println(String.format("Therefore, with %d elements in the array, it took unique1 and unique2 an equal amount of time at %d milliseconds!", arraySize, finalTime1));
+    }
+    else // Finally, throws an exception if none of the top three checks apply
+    {
+        throw new RuntimeException();
+    }
+
+    // In conclusion, I believe unique1 is quadratic, due to its nested loops to go through the array. Meanwhile, unique2 creates a copy to then compares the values of each element
+    // Admittedly, I'm still trying to fully understand it (I sometimes have trouble fully understanding code that I didn't write myself), but based on what I understand from class,
+    // I believe this is the case.
+    // Similarly, I believe prefixAverage1 from exercise 2 is quadratic as well, and it ran slower than prefixAverage2, on average. So I believe this is a similar situation
 
 }

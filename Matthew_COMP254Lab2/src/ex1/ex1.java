@@ -36,12 +36,11 @@ public void main(String[] args){
                 total += arr[j]; // +2 n operations
             return total; // +1 operations
         }
-        // Same as a):
-        // 4n + 4 is O(n)
+        // Results:
+        // n^2 + 3n + 4 is O(n^2)
 
         // The only difference in this method is that j increments by 2 instead of 1,
-        // But that still means it'll increase each iteration. It can still run
-        // n amount of times depending on the size of the array
+        // So each iteration increases twice as much, compared to a)
 
 
         // c)
@@ -54,11 +53,13 @@ public void main(String[] args){
             return total; // + 1 const op
         }
         // Results:
-        // 6n + 4 is O(n)
+        // n^2 + 5n + 4 is O(n^2)
 
         // In this scenario, there's an additional 2 n operations to be accounted for,
-        // these come from the secondary loop, which when checked, then add the array element's
-        // value to total.
+        // these come from the secondary loop, which can only run depending on the value
+        // of n, as the check relies on j being less than n, which then checks
+        // that the new check k is less than or equal to j. Within that second
+        // loop is where the prefix is updated with the value of arr[j]
 
 
         // d)
@@ -77,7 +78,8 @@ public void main(String[] args){
         // We get an additional constant operation from the initialization of int prefix.
         // Additionally, total += prefix is only one n operation because it's simply
         // adding prefix to total, where prefix += arr[j] also has to get the value of
-        // j before adding it to prefix.
+        // j before adding it to prefix. In this method, it doesn't need another looping
+        // check before updating the prefix. That prefix is then added to the total.
 
 
         // e)
@@ -94,10 +96,13 @@ public void main(String[] args){
             return count; // + 1 const op
         }
         // Results:
-        // 10n + 4 is O(n)
+        // n^3 + 8n + 4 is O(n^3)
 
-        // In this case, the worst-case of 10n is entirely dependent on the if conditions.
-        // count++ only runs if second[i] is equal to total. Therefore, best case (not the big-Oh) is 9n + 4,
-        // in comparison
+        // In this case, the worst-case of 8n is entirely dependent on the if conditions.
+        // count++ only runs if second[i] is equal to total. Therefore, best case (not the big-Oh)
+        // is n^3 + 7n + 4, in comparison. Additionaly, there's two nested loops within the
+        // main one, both dependent on the n value for their values (j is less than n,
+        // k is less than or equal to j, but for it to run the previous loop has to pass
+        // verification). This is where the n^3 comes from
     }
 }
