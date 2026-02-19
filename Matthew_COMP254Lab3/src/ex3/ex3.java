@@ -9,7 +9,6 @@ public static long find(File path, String name)
 {
     long numFiles = 0; // Initializes counter to keep track of the number of files
     String isFound = null; // Creates null string, which is filled if file is found
-    System.out.println(path);
     if (path.isDirectory()) // Verifies if path is valid
     {
         File filename = new File(path, name); // With path verified, filename is logged to be searched
@@ -43,7 +42,6 @@ void main() {
 
     System.out.println("Please enter a filename (e.g. Minecraft.exe): ");
     filename = new Scanner(System.in).next();
-    filename.toString();
     System.out.println("Next, please enter the path to that file: ");
     path = new Scanner(System.in).nextLine();
 
