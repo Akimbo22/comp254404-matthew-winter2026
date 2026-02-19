@@ -8,7 +8,7 @@ public static int multiplyNums(int m, int n) // Sending m and n
 {
     if (n == 0)
     {
-        return 0;
+        return 0; // Once 0 is returned, we go back up through the iterations
     }
     else
     {
