@@ -5,6 +5,8 @@ import lists.LinkedQueue;
 // IMPORTANT NOTE:
 // As the instructions stated, I edited the SinglyLinkedList class. This is why it is now
 // called LinkedQueue and has Queue-related methods
+// Citing authors of SinglyLinkedLists, which was edited to make the LinkedQueue
+// Copyright 2014, Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser
 
 public LinkedQueue<String> concatenate(LinkedQueue<String> Q2)
 {

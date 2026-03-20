@@ -39,10 +39,11 @@ public class ex2<E> implements Stack<E> {
         int tCounter = T.size();
         // Using a second loop to print the elements of Stack T
         for(int i = 0;i<tCounter;i++) {
-            System.out.println(T.pop());
+            System.out.println(T.pop()); // Stack will print 1, 2, 3, 4, 5, 6
         }
     }
 
+    // Setting up the settings for the stack, including capacity, data storage, tracking the top of the index
     public static final int CAPACITY=50;
     private E[] data;
     private int t = -1;
