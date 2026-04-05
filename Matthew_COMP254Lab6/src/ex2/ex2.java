@@ -2,6 +2,9 @@
 // April 4th, 2026
 // Lab 6 - Exercise 2
 
+// Citation:
+// Copyright 2014, Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser
+
 import maps.SortedTableMap;
 import java.util.Map;
 import java.util.Random;
