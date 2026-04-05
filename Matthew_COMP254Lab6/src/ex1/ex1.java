@@ -36,7 +36,7 @@ void main() {
     do {
         System.out.println("\nNow, please enter the prime factor: ");
         custPrime = scanner.nextInt();
-    }while(custPrime<=0 && (custPrime%2 == 0)); // Ensures that it is actually a prime number
+    }while(custPrime<=1 && (custPrime%2 == 0)); // Ensures that it is actually a prime number
     ChainHashMap<Integer, String> customMap = new ChainHashMap<>(custCap, custPrime);
 
     for (int count = 1; count <= custCap; count++) { // We use a loop to fill the map
