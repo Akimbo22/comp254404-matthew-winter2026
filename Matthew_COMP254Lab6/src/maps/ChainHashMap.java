@@ -39,10 +39,10 @@ public class ChainHashMap<K,V> extends AbstractHashMap<K,V> {
   /** Creates a hash table with capacity 11 and prime factor 109345121. */
   public ChainHashMap() { super(); }
 
-    @Override
-    public V put(K key, V value, int customLoad) {
-        return null;
-    }
+//    @Override
+//    public V put(K key, V value, int customLoad) {
+//        return null;
+//    }
 
     /** Creates a hash table with given capacity and prime factor 109345121. */
   public ChainHashMap(int cap) { super(cap); }

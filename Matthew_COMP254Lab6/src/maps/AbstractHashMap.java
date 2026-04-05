@@ -128,7 +128,7 @@ public abstract class AbstractHashMap<K,V> extends AbstractMap<K,V> {
 
   // protected abstract methods to be implemented by subclasses
 
-    public abstract V put(K key, V value, int customLoad);
+    //public abstract V put(K key, V value, int customLoad);
 
     /** Creates an empty table having length equal to current capacity. */
   protected abstract void createTable();

@@ -1,117 +1,76 @@
-package ex1;
 // Matthew Elliott - 301424215
 // April 4th, 2026
 // Lab 6 - Exercise 1
 
 // Citation:
 // Copyright 2014, Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser
-import maps.AbstractHashMap;
 import maps.ChainHashMap;
-import maps.Entry;
-import maps.UnsortedTableMap;
 import java.util.Random;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ex1<K,V> extends AbstractHashMap<K,V> {
-    private UnsortedTableMap<K,V>[] table;
+// We're attempting to bypass the check for n > capacity / 2 by manually changing the size
+public ChainHashMap<Integer, String> updateTable(int newCap, int p, ChainHashMap<Integer, String> oldMap){
+    // We make a new map and give it the new cap
+    ChainHashMap<Integer, String> newMap = new ChainHashMap<>(newCap, p);
+    // We loop through the old map to add the same values to the new one
+    for(int i=0;i<= oldMap.size();i++)
+    {
+        // Only add values that aren't null
+        if(oldMap.get(i) != null)
+        {
+            newMap.put(i, oldMap.get(i));
+        }
+    }
+    return newMap;
+}
 
-    void main() {
-        // Essentially, to my understanding, we want to give the user complete control.
-        // Here, I will let the user decide the capacity, prime factor, and a custom load factor
-        // Then, the user will enter a key and a value for each entry
-        // Finally, each entry will be printed
-        long startTime = System.currentTimeMillis();
-        Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
-        // First, we get the custom values:
-        System.out.println("Please enter the map capacity: ");
-        int custCap = scanner.nextInt();
-        int custPrime;
-        do {
-            System.out.println("\nNow, please enter the prime factor: ");
-            custPrime = scanner.nextInt();
-        }while(custPrime<=0 && (custPrime%2 == 0)); // Ensures that it is actually a prime number
+void main() {
+    long startTime = System.currentTimeMillis(); // Getting the runtime for testing
+    Scanner scanner = new Scanner(System.in);
+    Random random = new Random();
+    // We first get the custom map capacity
+    System.out.println("Please enter the map capacity: ");
+    int custCap = scanner.nextInt();
+    // Next, we want the custom prime factor
+    int custPrime;
+    do {
+        System.out.println("\nNow, please enter the prime factor: ");
+        custPrime = scanner.nextInt();
+    }while(custPrime<=0 && (custPrime%2 == 0)); // Ensures that it is actually a prime number
+    ChainHashMap<Integer, String> customMap = new ChainHashMap<>(custCap, custPrime);
 
-        System.out.println("\nFinally, enter a custom load factor: ");
-        int customLoad = scanner.nextInt();
-        // Now we create the map with the user entered capacity and prime factor
-        AbstractHashMap<Integer, String> customMap = new ChainHashMap<Integer, String>(custCap, custPrime);
-        for (int count = 1; count <= custCap; count++) { // We use a loop to fill the map
-            System.out.println("For entry: " + count);
-            // Getting the user key and values
-            System.out.println("\nEnter the key: ");
-            int key;
+    for (int count = 1; count <= custCap; count++) { // We use a loop to fill the map
+        System.out.println("For entry: " + count);
+        // Getting the user key and values
+        //System.out.println("\nEnter the key: "); // Commented out since it is randomized
+        int key;
 //            do{
 //                key = scanner.nextInt();
 //            }while(key<=0 && key>custCap);
-            key = random.nextInt(1,custCap); // Using a random number range to experiment on ChainHashMap
+        key = random.nextInt(0,custCap); // Using a random number range to experiment on ChainHashMap runtime
 
-            System.out.println("\nNow, enter the value: ");
-            String word = scanner.next();
-            // We add the key, value(word) to the map, using the custom load factor
-            customMap.put(key, word, customLoad);
+        System.out.println("\nNow, enter the value for key " + key + ": ");
+        String word = scanner.next();
+        // We add the key, value(word) to the map
+        customMap.put(key, word);
+        // Instead of letting put() keep the load factor, we let the user decide if they would like to update the cap
+        System.out.println("Update the capacity? (if lower than or equal to existing, this will not be changed): ");
+        int newCap = scanner.nextInt();
+        if(newCap > custCap) // We only update it if the capacity is larger than the
+            // original, otherwise we will get errors
+        {
+            customMap = updateTable(newCap, custPrime, customMap);
+            custCap = newCap; // Updates the custCap variable so the loop continues to function correctly
         }
-        // Finally, we print the value
-//        for (int keyCount = 1;keyCount<=custCap;keyCount++) {
-//            System.out.println("\nFor Key: " + keyCount + "\nValue: " + customMap.get(keyCount));
-//        }
-        for(String words : customMap.values()){
-            System.out.println(words);
-        }
-        // Two loops to test. I can only get a return of null, but for the life of me,
-        // I can't figure out why
-
-        long endTime = System.currentTimeMillis();
-        long finalTime = endTime-startTime; // For testing purposes, I'm tracking the time
-        System.out.println("\n\nFinal time in milliseconds: " + finalTime);
-        // On average, it takes around 10000 milliseconds.
-        // Although, given the time it takes for me to enter the other values, it may be closer to 7000-9000
+        System.out.println(customMap.entrySet());
     }
+    long endTime = System.currentTimeMillis();
+    long finalTime = endTime-startTime;
+    System.out.println("For testing purposes, the final time was: " + finalTime + " milliseconds");
+    // On average, it took about 35000 milliseconds, but that's very dependent on certain factors
+    // It would take more/less time depending on the cap/if I change the cap
+    // You also have to take into account the time spent typing the value.
 
-    @Override
-    public V put(K key, V value, int customLoad) {
-        V answer = bucketPut(hashValue(key), key, value);
-        if (n > customLoad / 2)              // Altered method to check the custom load factor
-            resize(2 * customLoad - 1);
-        return answer;
-    }
+    // Completely automating it could help, although the instructions specify just randomizing the key
 
-    @Override
-    protected void createTable() {
-        table = (UnsortedTableMap<K,V>[]) new UnsortedTableMap[capacity];
-    }
-
-    @Override
-    protected V bucketGet(int h, K k) {
-        UnsortedTableMap<K,V> bucket = table[h];
-        if (bucket == null) return null;
-        return bucket.get(k);
-    }
-
-    @Override
-    protected V bucketPut(int h, K k, V v) {
-        UnsortedTableMap<K,V> bucket = table[h];
-        if (bucket == null)
-            bucket = table[h] = new UnsortedTableMap<>();
-        int oldSize = bucket.size();
-        V answer = bucket.put(k,v);
-        n += (bucket.size() - oldSize);
-        return answer;
-    }
-
-    @Override
-    protected V bucketRemove(int h, K k) {
-        return null;
-    }
-
-    @Override
-    public Iterable<Entry<K, V>> entrySet() {
-        ArrayList<Entry<K,V>> buffer = new ArrayList<>();
-        for (int h=0; h < capacity; h++)
-            if (table[h] != null)
-                for (Entry<K,V> entry : table[h].entrySet())
-                    buffer.add(entry);
-        return buffer;
-    }
 }
