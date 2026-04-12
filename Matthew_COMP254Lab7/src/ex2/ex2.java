@@ -21,7 +21,7 @@ public static LinkedQueue<Integer> merge(LinkedQueue<Integer> queue1, LinkedQueu
                 // value, then add the smaller value to the larger one, as you would want
                 // the smaller value at the bottom so it would be printed bottom-up
                 queue1.enqueue(queue2.dequeue());
-                System.out.println(queue1.first());
+                System.out.println(queue1.first() + " Queue 1 Test");
             }
         }
         else if(queue2.first() > queue1.first())
@@ -29,7 +29,7 @@ public static LinkedQueue<Integer> merge(LinkedQueue<Integer> queue1, LinkedQueu
             for(int i=0;i<queue1.size();i++)
             {
                 queue2.enqueue(queue1.dequeue());
-                System.out.println(queue2.first());
+                System.out.println(queue2.first() + " Queue 2 Test");
             }
         }
 
@@ -44,6 +44,7 @@ public static LinkedQueue<Integer> bottomUpMergeSort(LinkedQueue<Integer> queue)
     LinkedQueue<LinkedQueue<Integer>> masterQueue = new LinkedQueue<>();
     for(int i=0;i< queue.size();)
     {
+        System.out.println("Sub Queue Merge Test");
         LinkedQueue<Integer> subQueue = new LinkedQueue<>();
         subQueue.enqueue(queue.dequeue()); // The value from the initial queue is added to the sub-queue
         masterQueue.enqueue(subQueue); // The sub-queue is then added to the master queue
@@ -51,7 +52,7 @@ public static LinkedQueue<Integer> bottomUpMergeSort(LinkedQueue<Integer> queue)
 
     for(int i=1;i< masterQueue.size();) // Ensures the master queue has 2 queues to merge
     {
-        System.out.println("Test");
+        System.out.println("Merge Queues Test");
         LinkedQueue<Integer> mergedQueue = new LinkedQueue<>();
         LinkedQueue<Integer> queue1 = masterQueue.dequeue();
         LinkedQueue<Integer> queue2 = masterQueue.dequeue(); // The queues are dequeued from the master queue
@@ -73,7 +74,7 @@ void main() {
     queue = bottomUpMergeSort(queue);
     for(int i=0;i<queue.size();i++)
     {
-        System.out.println("TEst");
+        System.out.println("Main Loop Test");
         System.out.println(queue.dequeue());
     }
 }
