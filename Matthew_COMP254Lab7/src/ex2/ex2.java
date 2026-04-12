@@ -16,7 +16,7 @@ public static LinkedQueue<Integer> merge(LinkedQueue<Integer> queue1, LinkedQueu
 {
     LinkedQueue<Integer> mergedQueue = new LinkedQueue<>();
     if(!queue1.isEmpty() && !queue2.isEmpty()) {
-        if(queue1.first() > queue2.first()) // Checks the values of the queues' first value
+        if(queue1.first() >= queue2.first()) // Checks the values of the queues' first value
         {
             for(int i=0;i<queue2.size();)
             {
@@ -27,7 +27,7 @@ public static LinkedQueue<Integer> merge(LinkedQueue<Integer> queue1, LinkedQueu
                 System.out.println(queue1.first() + " Queue 1 Test");
             }
         }
-        else if(queue2.first() > queue1.first())
+        else if(queue2.first() >= queue1.first())
         {
             for(int i=0;i<queue1.size();)
             {
