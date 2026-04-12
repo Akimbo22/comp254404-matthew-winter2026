@@ -6,16 +6,19 @@
 // Copyright 2014, Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser
 import ex2Resources.LinkedQueue;
 
-// First method is an edit of the merge method from the MergeSort class. It now uses a queue rather than
-// an array
+// First method is an edit of the merge method from the MergeSort class. I've pretty much changed it
+// Completely now. It takes two queues, checks the size of each queue's first value, then to get a bottom-up sort,
+// The queue with the smaller value is added onto the queue with the larger first value. It's not a perfect set-up,
+// But it should work
 
+// Based on the queue I made in main(), this should have to run 4 times
 public static LinkedQueue<Integer> merge(LinkedQueue<Integer> queue1, LinkedQueue<Integer> queue2)
 {
     LinkedQueue<Integer> mergedQueue = new LinkedQueue<>();
     if(!queue1.isEmpty() && !queue2.isEmpty()) {
         if(queue1.first() > queue2.first()) // Checks the values of the queues' first value
         {
-            for(int i=0;i<queue2.size();i++)
+            for(int i=0;i<queue2.size();)
             {
                 // My logic is that you would check first to see which queue has a larger
                 // value, then add the smaller value to the larger one, as you would want
@@ -26,7 +29,7 @@ public static LinkedQueue<Integer> merge(LinkedQueue<Integer> queue1, LinkedQueu
         }
         else if(queue2.first() > queue1.first())
         {
-            for(int i=0;i<queue1.size();i++)
+            for(int i=0;i<queue1.size();)
             {
                 queue2.enqueue(queue1.dequeue());
                 System.out.println(queue2.first() + " Queue 2 Test");
@@ -42,7 +45,7 @@ public static LinkedQueue<Integer> bottomUpMergeSort(LinkedQueue<Integer> queue)
 {
     LinkedQueue<Integer> finalQueue = new LinkedQueue<>();
     LinkedQueue<LinkedQueue<Integer>> masterQueue = new LinkedQueue<>();
-    for(int i=0;i< queue.size();)
+    for(int i=0;i< queue.size();) // Based on the main(), this should run 5 times
     {
         System.out.println("Sub Queue Merge Test");
         LinkedQueue<Integer> subQueue = new LinkedQueue<>();
@@ -58,8 +61,12 @@ public static LinkedQueue<Integer> bottomUpMergeSort(LinkedQueue<Integer> queue)
         LinkedQueue<Integer> queue2 = masterQueue.dequeue(); // The queues are dequeued from the master queue
         mergedQueue = merge(queue1, queue2);
         masterQueue.enqueue(mergedQueue); // Adds the merged queue to the master queue to be merged again
-        finalQueue = masterQueue.first(); // Sends the merged elements to the finalQueue
+//        finalQueue = masterQueue.dequeue(); // Sends the merged elements to the finalQueue
+//        System.out.println("Merged Size: " + finalQueue.size()); // Testing purposes, I am printing the final size
     }
+    finalQueue = masterQueue.dequeue(); // Sends the merged elements to the finalQueue
+    System.out.println("Merged Size: " + finalQueue.size()); // Testing purposes, I am printing the final size
+
     return finalQueue;
 }
 
@@ -71,8 +78,9 @@ void main() {
     queue.enqueue(3);
     queue.enqueue(9);
     queue.enqueue(7);
+    System.out.println("Size: " + queue.size()); // For testing purposes, I'm printing the size
     queue = bottomUpMergeSort(queue);
-    for(int i=0;i<queue.size();i++)
+    for(int i=0;i<queue.size();)
     {
         System.out.println("Main Loop Test");
         System.out.println(queue.dequeue());
